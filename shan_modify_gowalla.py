@@ -11,6 +11,13 @@ import logging.config
 # 遇到的问题：在计算得到的每个pu(u)无法追加到placeholder中，目前来看placeholder传值的方式是feet_dict的方式
 # 但是feet_dict只适用于session中，无法在build_model中进行动态的生成palceholder？有没有其他的方式
 #
+
+# セッションの順序に従って、user_embeddingとsessionの意図結果を継続的に計算し、次のセッションと連結して、上記の操作を繰り返します
+
+# 問題が発生した：計算で取得した各pu（u）をプレースホルダーに追加できない現在、プレースホルダーが値を渡す方法はfeet_dictの方法です
+# しかし、feet_dictはセッションでのみ機能し、build_modelで動的にpalceholderを生成することはできませんか？ 他の方法はありますか？
+# 
+
 class data_generation():
     def __init__(self, type):
         print('init')
@@ -228,11 +235,11 @@ class shan():
                         tf.transpose(self.weight)), axis=0)
         return out
 
-    def generate_long_term_rep(self):
-        # 如果使用第一种操作，则重复执行pre_sessions_embedding.size()次attention_level_one
+    # def generate_long_term_rep(self):
+    #     # 如果使用第一种操作，则重复执行pre_sessions_embedding.size()次attention_level_one
 
-        # 如果使用第二种操作，则先执行一次attention_level_one，然后循环使用attention_level_two
-        return 0
+    #     # 如果使用第二种操作，则先执行一次attention_level_one，然后循环使用attention_level_two
+    #     return 0
 
     def build_model(self):
         print('building model ... ')
